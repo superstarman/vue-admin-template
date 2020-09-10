@@ -2,7 +2,7 @@
  * Author: wangpeng
  * Date: 2020-09-01 12:14:13
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-04 08:58:00
+ * LastEditTime: 2020-09-10 17:56:36
 -->
 <template>
   <div :class="{'has-logo':showLogo}">
@@ -44,10 +44,7 @@ import variables from '@/styles/variables.scss'
 export default {
   components: { SidebarItem, Logo, Hamburger },
   computed: {
-    ...mapGetters([
-      'permission_routes',
-      'sidebar'
-    ]),
+    ...mapGetters(['permission_routes', 'sidebar']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
@@ -65,13 +62,13 @@ export default {
     },
     isCollapse() {
       return !this.sidebar.opened
-    }
+    },
   },
   methods: {
-     toggleSideBar() {
+    toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>

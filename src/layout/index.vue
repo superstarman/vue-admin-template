@@ -11,7 +11,9 @@
     </div>
   </div>
   <!-- 上下布局 -->
-  <div class="app-wrapper" v-else>
+  <div :class="classObj" class="app-wrapper" v-else>
+    <div @click="handleClickOutside" class="drawer-bg" v-if="device==='mobile'&&sidebar.opened" />
+    <sidebar class="sidebar-container" v-if="device==='mobile'" />
     <div :class="{'fixed-header':fixedHeader}">
       <navbar-menu />
     </div>
@@ -29,7 +31,7 @@ export default {
     Navbar,
     NavbarMenu,
     Sidebar,
-    AppMain
+    AppMain,
   },
   mixins: [ResizeMixin],
   computed: {
@@ -48,18 +50,18 @@ export default {
     },
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
+        hideSidebar: !this.sidebar.opened && this.device === 'mobile',
+        openSidebar: this.sidebar.opened && this.device === 'mobile',
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        mobile: this.device === 'mobile',
       }
-    }
+    },
   },
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
-    }
-  }
+    },
+  },
 }
 </script>
 
