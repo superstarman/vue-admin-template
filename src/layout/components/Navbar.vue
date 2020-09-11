@@ -11,26 +11,7 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu class="user-dropdown" slot="dropdown">
-          <router-link to="/">
-            <el-dropdown-item>Home</el-dropdown-item>
-          </router-link>
-          <a href="https://github.com/PanJiaChen/vue-admin-template/" target="_blank">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a href="https://panjiachen.github.io/vue-element-admin-site/#/" target="_blank">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item @click.native="logout" divided>
-            <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <navbar-right-menu />
     </div>
   </div>
 </template>
@@ -39,12 +20,14 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import NavbarRightMenu from './NavbarRightMenu'
 
 export default {
   name: 'Navbar',
   components: {
     Breadcrumb,
     Hamburger,
+    NavbarRightMenu,
   },
   computed: {
     ...mapGetters(['sidebar', 'device', 'avatar']),
@@ -55,10 +38,6 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
-    },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
   },
 }

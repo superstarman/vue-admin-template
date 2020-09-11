@@ -2,11 +2,12 @@
  * Author: wangpeng
  * Date: 2020-09-08 10:42:55
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-10 18:32:59
+ * LastEditTime: 2020-09-11 15:35:36
 -->
 <script>
 import { mapGetters } from 'vuex'
 import path from 'path'
+import { generateTitle } from '@/utils/i18n'
 import { isExternal } from '@/utils/validate'
 import IconItem from './Item'
 import AppLink from './Link'
@@ -44,7 +45,7 @@ export default {
           //构造一个更多路由对象
           path: '/',
           name: 'More',
-          meta: { title: 'More' },
+          meta: { title: 'more' },
           children: [],
         }
         let count = 0,
@@ -120,7 +121,7 @@ export default {
                           this.onlyOneChild.meta.icon ||
                           (item.meta && item.meta.icon)
                         }
-                        title={this.onlyOneChild.meta.title}
+                        title={this.generateTitle(this.onlyOneChild.meta.title)}
                       />
                     </template>
                   </el-menu-item>
@@ -137,7 +138,7 @@ export default {
                   <icon-item
                     v-if="item.meta"
                     icon={item.meta && item.meta.icon}
-                    title={item.meta.title}
+                    title={this.generateTitle(item.meta.title)}
                   />
                 </template>
                 {this.createSubItem(
@@ -183,6 +184,7 @@ export default {
       }
       return path.resolve(basePath, routePath)
     },
+    generateTitle,
   },
 }
 </script>

@@ -2,7 +2,7 @@
  * Author: wangpeng
  * Date: 2020-09-01 12:14:13
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-10 14:46:12
+ * LastEditTime: 2020-09-11 11:08:16
  */
 module.exports = {
   title: 'vue-admin-template',
@@ -11,7 +11,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether fix the header
    */
-  fixedHeader: false,
+  fixedHeader: true,
 
   /**
    * @type {boolean} true | false

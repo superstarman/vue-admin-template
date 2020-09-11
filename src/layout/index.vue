@@ -14,7 +14,7 @@
   <div :class="classObj" class="app-wrapper" v-else>
     <div @click="handleClickOutside" class="drawer-bg" v-if="device==='mobile'&&sidebar.opened" />
     <sidebar class="sidebar-container" v-if="device==='mobile'" />
-    <div :class="{'fixed-header':fixedHeader}">
+    <div :class="{'fixed-header fixed-header-else':fixedHeader}">
       <navbar-menu />
     </div>
     <app-main />
@@ -96,6 +96,9 @@ export default {
   z-index: 9;
   width: calc(100% - #{$sideBarWidth});
   transition: width 0.28s;
+}
+.fixed-header-else {
+  width: 100%;
 }
 
 .hideSidebar .fixed-header {

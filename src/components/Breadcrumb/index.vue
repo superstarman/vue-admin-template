@@ -2,7 +2,7 @@
  * Author: wangpeng
  * Date: 2020-09-01 12:14:13
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-03 20:07:39
+ * LastEditTime: 2020-09-11 14:49:09
 -->
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
@@ -11,26 +11,30 @@
         <span
           class="no-redirect"
           v-if="item.redirect==='noRedirect'||index==levelList.length-1"
-        >{{ item.meta.title }}</span>
-        <a @click.prevent="handleLink(item)" v-else>{{ item.meta.title }}</a>
+        >{{ generateTitle(item.meta.title) }}</span>
+        <a @click.prevent="handleLink(item)" v-else>{{ generateTitle(item.meta.title) }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
 </template>
 
 <script>
+import { generateTitle } from '@/utils/i18n'
 import pathToRegexp from 'path-to-regexp'
 
 export default {
   data() {
     return {
-      levelList: null
+      levelList: null,
     }
   },
   watch: {
     $route() {
+      if (route.path.startsWith('/redirect/')) {
+        return
+      }
       this.getBreadcrumb()
-    }
+    },
   },
   created() {
     this.getBreadcrumb()
@@ -38,14 +42,21 @@ export default {
   methods: {
     getBreadcrumb() {
       // only show routes with meta.title
-      let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
+      let matched = this.$route.matched.filter(
+        (item) => item.meta && item.meta.title,
+      )
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' } }].concat(
+          matched,
+        )
       }
 
-      this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+      this.levelList = matched.filter(
+        (item) =>
+          item.meta && item.meta.title && item.meta.breadcrumb !== false,
+      )
     },
     isDashboard(route) {
       const name = route && route.name
@@ -67,8 +78,8 @@ export default {
         return
       }
       this.$router.push(this.pathCompile(path))
-    }
-  }
+    },
+  },
 }
 </script>
 

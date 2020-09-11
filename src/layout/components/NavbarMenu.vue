@@ -2,7 +2,7 @@
  * Author: wangpeng
  * Date: 2020-09-04 12:02:43
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-10 17:08:45
+ * LastEditTime: 2020-09-11 17:53:46
 -->
 <template>
   <div class="navbar">
@@ -20,26 +20,7 @@
       <topbar />
     </div>
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu class="user-dropdown" slot="dropdown">
-          <router-link to="/">
-            <el-dropdown-item>Home</el-dropdown-item>
-          </router-link>
-          <a href="https://github.com/PanJiaChen/vue-admin-template/" target="_blank">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a href="https://panjiachen.github.io/vue-element-admin-site/#/" target="_blank">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item @click.native="logout" divided>
-            <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <navbar-right-menu />
     </div>
   </div>
 </template>
@@ -49,10 +30,11 @@ import { mapGetters } from 'vuex'
 import variables from '@/styles/variables.scss'
 import Hamburger from '@/components/Hamburger'
 import Topbar from './Sidebar/Topbar'
+import NavbarRightMenu from './NavbarRightMenu'
 import { Sidebar } from '.'
 export default {
   name: 'NavbarMenu',
-  components: { Hamburger, Topbar },
+  components: { Hamburger, Topbar, NavbarRightMenu },
   data() {
     return {
       title: 'vue-admin-template',
@@ -82,10 +64,6 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
-    },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
   },
 }
@@ -154,7 +132,7 @@ export default {
     }
 
     .right-menu-item {
-      display: inline-block;
+      float: right;
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
@@ -169,29 +147,19 @@ export default {
           background: rgba(0, 0, 0, 0.025);
         }
       }
-    }
 
-    .avatar-container {
-      float: right;
-      margin-right: 30px;
-
-      .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
-
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
+      .avatar-container {
+        margin-right: 20px;
+        padding: 0 10px;
+        cursor: pointer;
+        .avatar-wrapper {
+          display: flex;
+          align-items: center;
+          .user-avatar {
+            display: flex;
+            align-items: center;
+            margin-right: 4px;
+          }
         }
       }
     }

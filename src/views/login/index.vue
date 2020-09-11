@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <div class="header">车辆智能运维系统</div>
+    <div class="header">
+      <img src="@/assets/images/logo.png" />
+      <h3>{{$t('login.logoName')}}</h3>
+    </div>
     <div class="banner">
-      <img alt src="../../assets/images/login/login_bg.png" />
+      <img alt src="../../assets/images/login/login_bg.jpg" />
       <div class="login-container">
         <el-form
           :model="loginForm"
@@ -12,16 +15,16 @@
           label-position="left"
           ref="loginForm"
         >
-          <div class="login-title">欢迎登录系统</div>
+          <div class="login-title">{{$t('login.title')}}</div>
 
           <el-form-item class="user-item" prop="username">
             <span class="svg-container">
               <svg-icon icon-class="user" />
             </span>
             <el-input
+              :placeholder="$t('login.username')"
               auto-complete="on"
               name="username"
-              placeholder="账号"
               ref="username"
               tabindex="1"
               type="text"
@@ -29,20 +32,25 @@
             />
             <span class="stick"></span>
           </el-form-item>
-          <el-tooltip content="大写键已开启" manual placement="right" v-model="capsTooltip">
+          <el-tooltip
+            :content="$t('login.capsTips')"
+            manual
+            placement="right"
+            v-model="capsTooltip"
+          >
             <el-form-item class="psw-item" prop="password">
               <span class="svg-container">
                 <svg-icon icon-class="password" />
               </span>
               <el-input
                 :key="passwordType"
+                :placeholder="$t('login.password')"
                 :type="passwordType"
                 @blur="capsTooltip = false"
                 @keyup.enter.native="handleLogin"
                 @keyup.native="checkCapsLock"
                 auto-complete="on"
                 name="password"
-                placeholder="密码"
                 ref="password"
                 tabindex="2"
                 v-model="loginForm.password"
@@ -53,36 +61,41 @@
               </span>
             </el-form-item>
           </el-tooltip>
-          <el-button :loading="loading" @click.native.prevent="handleLogin" type="primary">登&nbsp录</el-button>
+          <el-button
+            :loading="loading"
+            @click.native.prevent="handleLogin"
+            type="default"
+          >{{$t('login.logIn')}}</el-button>
 
-          <div class="tips">建议使用IE10以上、谷歌、火狐浏览器</div>
+          <div class="tips">{{$t('login.tips')}}</div>
         </el-form>
       </div>
     </div>
     <div class="foot">
-      <div class="copyright">版权所有©比亚迪汽车工业有限公司</div>
+      <div class="copyright">{{$t('login.copyright')}}</div>
     </div>
   </div>
 </template>
 
 <script>
 import { validUsername } from '@/utils/validate'
+import { generateTitle } from '@/utils/i18n'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('请输入正确的账号'))
+        callback(new Error(this.$t('login.errorTips1')))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不能少于6位'))
-      } else if(value.length > 20) {
-        callback(new Error('密码不能多于20位'))
+        callback(new Error(this.$t('login.errorTips2')))
+      } else if (value.length > 20) {
+        callback(new Error(this.$t('login.errorTips3')))
       } else {
         callback()
       }
@@ -91,30 +104,34 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '111111',
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: 'blur', validator: validateUsername },
+        ],
+        password: [
+          { required: true, trigger: 'blur', validator: validatePassword },
+        ],
       },
       loading: false,
       capsTooltip: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
     }
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     checkCapsLock(e) {
-      const { key } = e;
-      this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z';
+      const { key } = e
+      this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z'
     },
     showPwd() {
       if (this.passwordType === 'password') {
@@ -127,22 +144,26 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch((err) => {
-            this.loading = false
-          })
+          this.$store
+            .dispatch('user/login', this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || '/' })
+              this.loading = false
+            })
+            .catch((err) => {
+              this.loading = false
+            })
         } else {
           console.log('error submit!!')
           return false
         }
       })
-    }
-  }
+    },
+    generateTitle,
+  },
 }
 </script>
 
@@ -152,7 +173,7 @@ export default {
 
 $bg: #f0f0f0;
 $gray: #666;
-$blue: #00aaff;
+$default: #4fc08d;
 $cursor: #999;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -198,9 +219,10 @@ $cursor: #999;
     height: 50px;
     margin: 40px auto;
     border-radius: 0;
-    background-color: $blue;
+    color: #fff;
+    background-color: $default;
     &:hover {
-      background-color: #29b9ff;
+      opacity: 0.9;
     }
   }
 }
@@ -209,21 +231,32 @@ $cursor: #999;
 <style lang="scss" scoped>
 $bg: #f2f2f2;
 $gray: #666;
-$blue: #00aaff;
+$default: #4fc08d;
 
 .container {
   position: relative;
   width: 100%;
   background-color: $bg;
   .header {
+    display: flex;
+    align-items: center;
     width: 100%;
-    height: 80px;
-    text-align: center;
-    line-height: 80px;
-    font-size: 32px;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
     font-weight: 700;
-    color: #336666;
     letter-spacing: 1px;
+    img {
+      width: 32px;
+      height: 32px;
+    }
+    h3 {
+      color: #4fc08d;
+      font-weight: 600;
+      font-size: 18px;
+      margin-left: 8px;
+      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+    }
   }
   .banner {
     position: relative;
@@ -285,7 +318,7 @@ $blue: #00aaff;
           margin-top: 30px;
         }
         .psw-item-focus {
-          border-color: $blue;
+          border-color: $default;
         }
 
         .tips {

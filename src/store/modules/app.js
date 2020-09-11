@@ -2,9 +2,10 @@
  * Author: wangpeng
  * Date: 2020-09-01 12:14:13
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-10 12:23:07
+ * LastEditTime: 2020-09-11 14:24:20
  */
 import Cookies from 'js-cookie'
+import { getLanguage } from '@/lang/index'
 
 const state = {
   sidebar: {
@@ -14,6 +15,7 @@ const state = {
     withoutAnimation: false,
   },
   device: 'desktop',
+  language: getLanguage(),
   idx: 10000, //顶部导航栏状态
 }
 
@@ -35,6 +37,10 @@ const mutations = {
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
   },
+  SET_LANGUAGE: (state, language) => {
+    state.language = language
+    Cookies.set('language', language)
+  },
   GET_TOPBAR_IDX: (state, idx) => {
     state.idx = idx
   },
@@ -49,6 +55,9 @@ const actions = {
   },
   toggleDevice({ commit }, device) {
     commit('TOGGLE_DEVICE', device)
+  },
+  setLanguage({ commit }, language) {
+    commit('SET_LANGUAGE', language)
   },
   getTopbarIdx({ commit }, idx) {
     commit('GET_TOPBAR_IDX', idx)
