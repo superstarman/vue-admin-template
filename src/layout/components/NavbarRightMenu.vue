@@ -7,15 +7,7 @@
 <template>
   <div>
     <div class="right-menu-item">
-      <el-dropdown @command="handleSetLanguage" trigger="hover">
-        <div>
-          <svg-icon icon-class="language" style="font-size: 16px" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :disabled="language==='zh'" command="zh">cn 简体中文</el-dropdown-item>
-          <el-dropdown-item :disabled="language==='en'" command="en">us English</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <lang-select />
     </div>
     <div class="right-menu-item">
       <el-dropdown class="avatar-container" trigger="hover">
@@ -42,27 +34,16 @@
 </template>
 
 <script>
-import store from '@/store'
+import LangSelect from '@/components/LangSelect'
 export default {
-  inject: ['reload'],
+  name: 'NavbarRightMenu',
+  components: { LangSelect },
   computed: {
-    language() {
-      return this.$store.getters.language
-    },
     username() {
       return this.$store.getters.name
     },
   },
   methods: {
-    handleSetLanguage(lang) {
-      this.$i18n.locale = lang
-      this.$store.dispatch('app/setLanguage', lang)
-      this.$message({
-        message: this.$t('navbar.switchLanguage'),
-        type: 'success',
-      })
-      this.reload()
-    },
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)

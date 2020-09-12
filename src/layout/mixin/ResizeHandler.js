@@ -25,6 +25,9 @@ export default {
     layoutMode() {
       return this.$store.state.settings.layoutMode
     },
+    language() {
+      return this.$store.getters.language
+    }
   },
   watch: {
     $route(route) {
@@ -94,13 +97,14 @@ export default {
     },
     $_getTopbarIdx() {
       /* 用于监测topbar宽度变化 */
-      //More长度暂定为92
+      //More长度暂定为92, 更多为88
+      let wid = this.language === 'en' ? 92 : 88
       let idx = 10000 //默认topbar不需要收缩
       let topbarWidth = this.topbar.getBoundingClientRect().width
       //遍历itemList
       if (this.itemList[this.itemList.length - 1] > topbarWidth) {
         for (var j = this.itemList.length - 2; j >= 0; j--) {
-          if (this.itemList[j] + 92 <= topbarWidth) {
+          if (this.itemList[j] + wid <= topbarWidth) {
             idx = j
             break
           }

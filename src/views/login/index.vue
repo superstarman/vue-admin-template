@@ -1,8 +1,13 @@
 <template>
   <div class="container">
     <div class="header">
-      <img src="@/assets/images/logo.png" />
-      <h3>{{$t('login.logoName')}}</h3>
+      <div class="header-left">
+        <img src="@/assets/images/logo.png" />
+        <h3>{{$t('login.logoName')}}</h3>
+      </div>
+      <div class="header-right">
+        <lang-select />
+      </div>
     </div>
     <div class="banner">
       <img alt src="../../assets/images/login/login_bg.jpg" />
@@ -78,11 +83,13 @@
 </template>
 
 <script>
+import LangSelect from '@/components/LangSelect'
 import { validUsername } from '@/utils/validate'
 import { generateTitle } from '@/utils/i18n'
 
 export default {
   name: 'Login',
+  components: { LangSelect },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -238,30 +245,38 @@ $default: #4fc08d;
   width: 100%;
   background-color: $bg;
   .header {
-    display: flex;
-    align-items: center;
     width: 100%;
     height: 50px;
     line-height: 50px;
     padding-left: 20px;
     font-weight: 700;
     letter-spacing: 1px;
-    img {
+    .header-left {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      float: left;
+      img {
       width: 32px;
       height: 32px;
+      }
+      h3 {
+        color: #4fc08d;
+        font-weight: 600;
+        font-size: 18px;
+        margin-left: 8px;
+        font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+      }
     }
-    h3 {
-      color: #4fc08d;
-      font-weight: 600;
-      font-size: 18px;
-      margin-left: 8px;
-      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+    .header-right {
+      float: right;
+      margin-right: 20px;
     }
   }
   .banner {
     position: relative;
-    min-width: 1000px;
-    height: 700px;
+    min-width: 375px;
+    height: 600px;
     img {
       width: 100%;
       height: 100%;
@@ -273,6 +288,10 @@ $default: #4fc08d;
       width: 348px;
       height: 390px;
       background-color: #fff;
+      @media screen and (max-width:992px){
+        right: 50%;
+        margin-right: -174px;
+      }
       .login-form {
         .login-title {
           width: 100%;

@@ -89,7 +89,7 @@ export default {
   .navbar-left {
     display: flex;
     align-items: center;
-    min-width: 280px;
+    width: 240px;
     height: 50px;
     padding-left: 20px;
     img {
