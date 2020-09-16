@@ -2,7 +2,7 @@
  * Author: wangpeng
  * Date: 2020-09-01 12:14:13
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-10 16:47:53
+ * LastEditTime: 2020-09-16 20:47:24
  */
 import store from '@/store'
 
@@ -27,7 +27,7 @@ export default {
     },
     language() {
       return this.$store.getters.language
-    }
+    },
   },
   watch: {
     $route(route) {
@@ -60,12 +60,11 @@ export default {
         this.itemList[i] = someVal
       }
       this.$_getTopbarIdx()
-      const isMobile = this.$_isMobile()
-      console.log(isMobile)
-      if (isMobile) {
-        store.dispatch('app/toggleDevice', 'mobile')
-        store.dispatch('app/closeSideBar', { withoutAnimation: true })
-      }
+    }
+    const isMobile = this.$_isMobile()
+    if (isMobile) {
+      store.dispatch('app/toggleDevice', 'mobile')
+      store.dispatch('app/closeSideBar', { withoutAnimation: true })
     }
   },
   methods: {

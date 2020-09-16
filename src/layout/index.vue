@@ -35,6 +35,12 @@ export default {
   },
   mixins: [ResizeMixin],
   computed: {
+    layoutMode() {
+      return this.$store.state.settings.layoutMode
+    },
+    fixedHeader() {
+      return this.$store.state.settings.fixedHeader
+    },
     /* 左右布局 */
     sidebar() {
       return this.$store.state.app.sidebar
@@ -42,20 +48,26 @@ export default {
     device() {
       return this.$store.state.app.device
     },
-    layoutMode() {
-      return this.$store.state.settings.layoutMode
-    },
-    fixedHeader() {
-      return this.$store.state.settings.fixedHeader
-    },
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened && this.device === 'mobile',
-        openSidebar: this.sidebar.opened && this.device === 'mobile',
+        hideSidebar:
+          (this.layoutMode === 'left_right' ||
+            (this.layoutMode === 'top_down' && this.device === 'mobile')) &&
+          !this.sidebar.opened,
+        openSidebar:
+          (this.sidebar.opened &&
+            this.device !== 'mobile' &&
+            this.layoutMode === 'left_right') ||
+          (this.layoutMode === 'top_down' &&
+            this.device === 'mobile' &&
+            this.sidebar.opened),
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile',
       }
     },
+  },
+  created() {
+    console.log(this.device)
   },
   methods: {
     handleClickOutside() {
@@ -97,12 +109,17 @@ export default {
   width: calc(100% - #{$sideBarWidth});
   transition: width 0.28s;
 }
+
+.hideSidebar .fixed-header {
+  width: calc(100% - 54px);
+}
+
 .fixed-header-else {
   width: 100%;
 }
 
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px);
+.hideSidebar .fixed-header-else {
+  width: 100%;
 }
 
 .mobile .fixed-header {

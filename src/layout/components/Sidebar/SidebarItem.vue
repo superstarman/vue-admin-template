@@ -92,6 +92,7 @@ export default {
         return true
       }
 
+      console.log(this.onlyOneChild)
       return false
     },
     resolvePath(routePath) {

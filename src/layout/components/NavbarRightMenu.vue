@@ -2,12 +2,15 @@
  * Author: wangpeng
  * Date: 2020-09-11 10:37:24
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-11 21:45:36
+ * LastEditTime: 2020-09-15 22:29:08
 -->
 <template>
   <div>
     <div class="right-menu-item">
       <lang-select />
+    </div>
+    <div class="right-menu-item">
+      <layout-mode-select />
     </div>
     <div class="right-menu-item">
       <el-dropdown class="avatar-container" trigger="hover">
@@ -35,9 +38,10 @@
 
 <script>
 import LangSelect from '@/components/LangSelect'
+import LayoutModeSelect from '@/components/layoutModeSelect'
 export default {
   name: 'NavbarRightMenu',
-  components: { LangSelect },
+  components: { LangSelect, LayoutModeSelect },
   computed: {
     username() {
       return this.$store.getters.name

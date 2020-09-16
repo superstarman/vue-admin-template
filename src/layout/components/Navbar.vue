@@ -8,7 +8,7 @@
       v-if="isShow"
     />
 
-    <breadcrumb class="breadcrumb-container" />
+    <breadcrumb class="breadcrumb-container" v-if="!isShow" />
 
     <div class="right-menu">
       <navbar-right-menu />

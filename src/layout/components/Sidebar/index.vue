@@ -2,7 +2,7 @@
  * Author: wangpeng
  * Date: 2020-09-01 12:14:13
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-10 17:56:36
+ * LastEditTime: 2020-09-15 21:17:45
 -->
 <template>
   <div :class="{'has-logo':showLogo}">

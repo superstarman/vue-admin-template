@@ -2,7 +2,7 @@
  * Author: wangpeng
  * Date: 2020-09-01 12:14:13
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-11 14:49:09
+ * LastEditTime: 2020-09-15 20:38:46
 -->
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
@@ -29,7 +29,7 @@ export default {
     }
   },
   watch: {
-    $route() {
+    $route(route) {
       if (route.path.startsWith('/redirect/')) {
         return
       }
@@ -79,6 +79,7 @@ export default {
       }
       this.$router.push(this.pathCompile(path))
     },
+    generateTitle,
   },
 }
 </script>

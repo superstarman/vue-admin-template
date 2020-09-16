@@ -1,14 +1,20 @@
+<!--
+ * Author: wangpeng
+ * Date: 2020-09-14 18:21:25
+ * LastEditors: wangpeng
+ * LastEditTime: 2020-09-15 22:00:49
+-->
 <template>
   <div>
     <el-dropdown @command="handleSetLanguage" trigger="hover">
-        <div>
-          <svg-icon icon-class="language" style="font-size: 16px" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :disabled="language==='zh'" command="zh">cn 简体中文</el-dropdown-item>
-          <el-dropdown-item :disabled="language==='en'" command="en">us English</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <div>
+        <svg-icon icon-class="language" style="font-size: 16px" />
+      </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item :disabled="language==='zh'" command="zh">cn 简体中文</el-dropdown-item>
+        <el-dropdown-item :disabled="language==='en'" command="en">us English</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 
@@ -30,11 +36,10 @@ export default {
         type: 'success',
       })
       this.reload()
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style>
-
 </style>

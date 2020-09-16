@@ -257,8 +257,8 @@ $default: #4fc08d;
       height: 50px;
       float: left;
       img {
-      width: 32px;
-      height: 32px;
+        width: 32px;
+        height: 32px;
       }
       h3 {
         color: #4fc08d;
@@ -288,7 +288,7 @@ $default: #4fc08d;
       width: 348px;
       height: 390px;
       background-color: #fff;
-      @media screen and (max-width:992px){
+      @media screen and (max-width: 992px) {
         right: 50%;
         margin-right: -174px;
       }

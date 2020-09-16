@@ -2,7 +2,7 @@
  * Author: wangpeng
  * Date: 2020-09-01 12:14:13
  * LastEditors: wangpeng
- * LastEditTime: 2020-09-11 11:08:16
+ * LastEditTime: 2020-09-15 20:23:35
  */
 module.exports = {
   title: 'vue-admin-template',
@@ -23,5 +23,5 @@ module.exports = {
    * @type {string} left_right | top_down
    * @description show the layout mode
    */
-  layoutMode: 'top_down',
+  layoutMode: 'left_right',
 }
